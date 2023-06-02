@@ -91,6 +91,8 @@ const contenedorElect = document.querySelector("#contenedor-elect");
 const contadorCarrito = document.querySelector("#contador-carrito");
 let productosEnCarritoLS = localStorage.getItem("productos-en-carrito");
 
+let total = 0;
+
 function mostrarProductos() {
     productos.forEach(producto => {
         const div = document.createElement("div");
@@ -103,7 +105,7 @@ function mostrarProductos() {
                     <h5 class="card-title titulo-elect">${producto.nombre}</h5>
                     <p class="precio-elect">${producto.color}</p>
                     <p class="precio-elect">$${producto.precio}</p>
-                    <button class="btn-card boton-agregar-elect" id="${producto.id}"><span>Agregar</span></button>
+                    <button class="btn-card boton-agregar-elect" id=${producto.id}><span>Agregar</span></button>
                 </div>
             </div>
         `;
@@ -114,11 +116,11 @@ function mostrarProductos() {
 
 function agregarProdAlCarrito(e) {
     
-    const idBoton = parseInt(e.currentTarget.id);
-    const productoAgregar = productos.find(producto => producto.id === parseInt(idBoton));
+    const idBoton = e.currentTarget.id;
+    const productoAgregar = productos.find(producto => producto.id == idBoton);
 
-    if(productosEnCarrito.some(producto => producto.id === idBoton)) {
-        const i = productosEnCarrito.findIndex(producto => producto.id === idBoton);
+    if(productosEnCarrito.some(producto => producto.id == idBoton)) {
+        const i = productosEnCarrito.findIndex(producto => producto.id == idBoton);
         productosEnCarrito[i]. cantidad++;
     } else {
         productoAgregar.cantidad = 1;
@@ -131,7 +133,7 @@ function agregarProdAlCarrito(e) {
 
 function actualizarContadorCarrito() {
     let contador = productosEnCarrito.reduce((acu, producto) => acu + producto.cantidad, 0);
-    //contadorCarrito.innerHTML = contador;
+    contadorCarrito.innerHTML = contador;
 };
  
 /************************************************************************************************************/
