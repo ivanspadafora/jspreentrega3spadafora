@@ -1,5 +1,16 @@
-function mostrarProductosCarrito() {
+let productosEnCarrito = localStorage.getItem("productos-en-carrito");
+productosEnCarrito = JSON.parse(productosEnCarrito);
+const contenedorCarritoVacio = document.querySelector("#contenedor-carrito-vacio");
+const contenedorCarritoProductos = document.querySelector("#contenedor-carrito-productos");
+const contenedorCarritoAcciones = document.querySelector("#contenedor-carrito-acciones");
+const contenedorCarritoComprado = document.querySelector("#contenedor-carrito-comprado");
+const botonVaciar = document.querySelector("#carrito-acciones-vaciar");
+const botonComprar = document.querySelector("#carrito-acciones-comprar");
+const carritoAccionesTotal = document.querySelector("#acciones-total");
+let botonesEliminar = "";
 
+function mostrarProductosCarrito() {
+    
     if (productosEnCarrito && productosEnCarrito.length > 0) {
 
         contenedorCarritoVacio.classList.add("deshabilitado");
@@ -30,7 +41,7 @@ function mostrarProductosCarrito() {
                     <small>Subtotal</small>
                     <p>$${producto.precio * producto.cantidad}</p>
                 </div>
-                <button class="carrito-elect-eliminar" id=${producto.id}><i class="fa-sharp fa-solid fa-trash"></i></button>
+                <button class="carrito-elect-eliminar" id="${producto.id}"><i class="fa-sharp fa-solid fa-trash"></i></button>
             `;
     
             contenedorCarritoProductos.append(div);
@@ -47,13 +58,13 @@ function mostrarProductosCarrito() {
 };
 
 function EliminarProdDelCarrito(e) {
-    const idBoton = e.currentTarget.id;
+    const idBoton = parseInt(e.currentTarget.id);
     const index = productosEnCarrito.findIndex(producto => producto.id === idBoton);
     productosEnCarrito.splice(index, 1);
 
     localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
     mostrarProductosCarrito();
-    botonesEliminar = document.querySelectorAll(".carrito-indu-eliminar");
+    botonesEliminar = document.querySelectorAll(".carrito-elect-eliminar");
 
     botonesEliminar.forEach(boton => {
         boton.addEventListener("click", EliminarProdDelCarrito);

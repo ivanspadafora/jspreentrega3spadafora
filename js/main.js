@@ -86,7 +86,6 @@ const productos = [
         imagen: "./assets/img/tablet.webp"
     }]
  
-
 let productosEnCarrito = [];
 const contenedorElect = document.querySelector("#contenedor-elect");
 const contadorCarrito = document.querySelector("#contador-carrito");
@@ -94,7 +93,6 @@ let productosEnCarritoLS = localStorage.getItem("productos-en-carrito");
 
 function mostrarProductos() {
     productos.forEach(producto => {
-
         const div = document.createElement("div");
         div.classList.add("col-md-4");
         div.classList.add("col-lg-3");
@@ -109,42 +107,38 @@ function mostrarProductos() {
                 </div>
             </div>
         `;
-
-        contenedorElect.append(div);
+    
+        contenedorElect.append(div);   
     });   
 };
 
-let total = 0;
-
 function agregarProdAlCarrito(e) {
-
-    const idBoton = e.currentTarget.id;
-    const productoAgregar = productos.find(producto => producto.id === idBoton);
+    
+    const idBoton = parseInt(e.currentTarget.id);
+    const productoAgregar = productos.find(producto => producto.id === parseInt(idBoton));
 
     if(productosEnCarrito.some(producto => producto.id === idBoton)) {
         const i = productosEnCarrito.findIndex(producto => producto.id === idBoton);
-        productosEnCarrito[i].cantidad++;
-
+        productosEnCarrito[i]. cantidad++;
     } else {
         productoAgregar.cantidad = 1;
         productosEnCarrito.push(productoAgregar);
     }
-
+    
     actualizarContadorCarrito();
-    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));    
 };
 
 function actualizarContadorCarrito() {
     let contador = productosEnCarrito.reduce((acu, producto) => acu + producto.cantidad, 0);
-   
+    //contadorCarrito.innerHTML = contador;
 };
-
-
+ 
 /************************************************************************************************************/
+ 
 mostrarProductos();
 const botonesAgregar = document.querySelectorAll(".boton-agregar-elect");
-
-
+                            
 if (productosEnCarritoLS) {
     productosEnCarrito = JSON.parse(productosEnCarritoLS);
     actualizarContadorCarrito();
